@@ -15,3 +15,4 @@ train_datasets/
 reduction_datasets/
 result/
 .vscode/
+asteris/__pycache__
