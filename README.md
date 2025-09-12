@@ -122,7 +122,7 @@ python ASTERIS_test.py
 
 ## 💡 Examples
 
-We provide demo data that can be directly tested with ASTERIS.  
+We provide demo data and pre-trained model that can be directly tested with ASTERIS.  
 
 1. Download the demo data from [https://doi.org/10.5281/zenodo.17105027](https://doi.org/10.5281/zenodo.17105027).   
 2. Unzip the archive and place the contents into `./test_datasets/`. 
