@@ -7,7 +7,6 @@
 │   ├── ASTERIS_net_4.py
 │   ├── ASTERIS_net_8.py
 │   ├── data_process.py
-│   ├── loss.py
 │   ├── test.py
 │   ├── train.py
 │   └── utils.py
