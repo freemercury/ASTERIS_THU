@@ -1,11 +1,10 @@
-# ASTERIS: Pushing Detection Limits of Astronomical Imaging via 
-# Self-supervised Spatiotemporal Denoising
+# ASTERIS: Pushing Detection Limits of Astronomical Imaging via Self-supervised Spatiotemporal Denoising
 # Author: Yuduo Guo, Hao Zhang, Mingyu Li
 # Tsinghua University, Beijing, China
 
 # ASTERIS is a deep learning framework for pushing the detection limit of astronomical 
 # imaging, with a focus on spatiotemporal denoising across multi-exposure observations. 
-# It is built upon and significantly extends the architecture of 
+# It is built upon and extends the architecture of 
 # [Restormer](https://arxiv.org/abs/2111.09881) by introducing temporal modeling and 
 # adaptive restoration tailored for scientific image sequences.
 # We sincerely thank the original authors of Restormer for making their code and design 
@@ -20,7 +19,7 @@
 # ## ✉️ Contact
 # For questions or potential collaborations, please contact Yuduo Guo at `gyd@mail.tsinghua.edu.cn`.
 # Copyright (c) 2025 Yuduo Guo. All rights reserved.
-# Date: 2025-05-22
+# Date: 2025-09-12
 import os
 from asteris.test import testing_class
 from asteris.utils import list_subfolders_or_self,make_stack
