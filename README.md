@@ -107,8 +107,7 @@ Ensure:
 
 - When using ASTERIS_*M*, each sub-directory must contain at least *M* individual `.fits` files — for example, ≥ 4 for ASTERIS4, ≥ 8 for ASTERIS8.
 
-- We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested.
-They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs 3293, 1210, 3215, and 1963**. The pre-trained models can be found under`./pth/`.
+- We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested. They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs [3293](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3293/), [1210](https://www.stsci.edu/jwst/phase2-public/1210.pdf), [3215](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3215/), and [1963](https://www.stsci.edu/jwst/phase2-public/1963.pdf)**.
 
 
 Run the testing script:
