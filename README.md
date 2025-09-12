@@ -95,8 +95,7 @@ To start training from scratch, run:
 python ASTERIS_train.py
 ```
 - All training parameters are configurable in the script itself.
-- We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested.
-They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs 3293, 1210, 3215, and 1963**. The pre-trained models can be found under`./pth/`.
+
 
 ### 4️⃣ Test the Model
 
@@ -107,6 +106,9 @@ Ensure:
 - All FITS files in the same sub-directory are astrometrically aligned.
 
 - When using ASTERIS_*M*, each sub-directory must contain at least *M* individual `.fits` files — for example, ≥ 4 for ASTERIS4, ≥ 8 for ASTERIS8.
+
+- We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested.
+They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs 3293, 1210, 3215, and 1963**. The pre-trained models can be found under`./pth/`.
 
 
 Run the testing script:
@@ -122,9 +124,11 @@ python ASTERIS_test.py
 
 We provide demo data that can be directly tested with ASTERIS.  
 
-1. Download the demo data from [https://doi.org/****](https://doi.org/****).  
-2. Unzip the archive and place the contents into `./test_datasets/`.  
-3. Run the following scripts to test the demo datasets:
+1. Download the demo data from [https://doi.org/10.5281/zenodo.17105027](https://doi.org/10.5281/zenodo.17105027).   
+2. Unzip the archive and place the contents into `./test_datasets/`. 
+3. Download the pre-trained model from [https://doi.org/****](https://doi.org/****). 
+4. Unzip the archive and place the contents into `./pth/`.  
+5. Run the following scripts to test the demo datasets:
 ```bash
 # Test on demo (short wavelengths)
 python ASTERIS_test_demo_short.py
