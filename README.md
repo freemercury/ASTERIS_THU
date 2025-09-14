@@ -34,7 +34,7 @@
 
 Other versions may work, but we cannot guarantee full compatibility.
 
-We provide two ways to set up the environment. **We recommend using the `environment.yml` method** for reproducibility, but manual installation is also possible.
+Two ways are recommended to set up the environment. **We recommend using the `environment.yml` method** for reproducibility, but manual installation is also possible.
 
 ```bash
 # Clone repository
@@ -109,6 +109,8 @@ Ensure:
 
 - We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested. They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs [3293](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3293/), [1210](https://www.stsci.edu/jwst/phase2-public/1210.pdf), [3215](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3215/), and [1963](https://www.stsci.edu/jwst/phase2-public/1963.pdf)**.
 
+- The **[pre-trained model](https://doi.org/10.5281/zenodo.17114980)** can be downloaded here.
+
 
 Run the testing script:
 ```bash
@@ -125,7 +127,7 @@ We provide demo data and pre-trained model that can be directly tested with ASTE
 
 1. Download the demo data from [https://doi.org/10.5281/zenodo.17105027](https://doi.org/10.5281/zenodo.17105027).   
 2. Unzip the archive and place the contents into `./test_datasets/`. 
-3. Download the pre-trained model from [https://doi.org/****](https://doi.org/****). 
+3. Download the pre-trained model from [https://doi.org/10.5281/zenodo.17114980](https://doi.org/10.5281/zenodo.17114980). 
 4. Unzip the archive and place the contents into `./pth/`.  
 5. Run the following scripts to test the demo datasets:
 ```bash
