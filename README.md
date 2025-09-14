@@ -125,9 +125,9 @@ python ASTERIS_test.py
 
 We provide demo data and pre-trained model that can be directly tested with ASTERIS.  
 
-1. Download the demo data from [https://doi.org/10.5281/zenodo.17105027](https://doi.org/10.5281/zenodo.17105027).   
+1. Download the **[demo data](https://doi.org/10.5281/zenodo.17105027)** from [https://doi.org/10.5281/zenodo.17105027](https://doi.org/10.5281/zenodo.17105027).   
 2. Unzip the archive and place the contents into `./test_datasets/`. 
-3. Download the pre-trained model from [https://doi.org/10.5281/zenodo.17114980](https://doi.org/10.5281/zenodo.17114980). 
+3. Download the **[pre-trained model](https://doi.org/10.5281/zenodo.17114980)** from [https://doi.org/10.5281/zenodo.17114980](https://doi.org/10.5281/zenodo.17114980). 
 4. Unzip the archive and place the contents into `./pth/`.  
 5. Run the following scripts to test the demo datasets:
 ```bash
