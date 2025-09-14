@@ -66,7 +66,10 @@ pip install tqdm scipy astropy tifffile scikit-image einops swanlab natsort path
 
 ## 📂 Usage
 
-ASTERIS is designed for multi-exposure astronomical imaging data denoising. Below is the standard workflow for preparing data, training models, and running tests.
+ASTERIS is designed for multi-exposure astronomical imaging data denoising. Below is the standard workflow.
+**ASTERIS can be directly applied for the JWST/NIRCam data from F070W to F480M with arbitary exposure time.**
+ASTERIS_8 requires 8 astrometrically-aligned fits.
+ASTERIS_4 requires 4 astrometrically-aligned fits.
 
 
 ### 1️⃣ Prepare Training Data
@@ -105,7 +108,7 @@ Ensure:
 
 - All FITS files in the same sub-directory are astrometrically aligned.
 
-- When using ASTERIS_*M*, each sub-directory must contain at least *M* individual `.fits` files — for example, ≥ 4 for ASTERIS4, ≥ 8 for ASTERIS8.
+- When using ASTERIS_*M*, each sub-directory must contain at least *M* individual `.fits` files — for example, ≥ 4 for ASTERIS_4, ≥ 8 for ASTERIS_8.
 
 - We provide two variants of pre-trained ASTERIS models--4-frame and 8-frame--that can be directly tested. They are trained separately for JWST/NIRCam long-wavelength (center wavelength ≥ 2.5 μm) and short-wavelength (center wavelength < 2.5 μm), using the imaging data from **Program IDs [3293](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3293/), [1210](https://www.stsci.edu/jwst/phase2-public/1210.pdf), [3215](https://www.stsci.edu/jwst-program-info/download/jwst/pdf/3215/), and [1963](https://www.stsci.edu/jwst/phase2-public/1963.pdf)**.
 
