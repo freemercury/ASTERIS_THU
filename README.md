@@ -67,7 +67,7 @@ pip install tqdm scipy astropy tifffile scikit-image einops swanlab natsort path
 ## 📂 Usage
 
 ASTERIS is designed for multi-exposure astronomical imaging data denoising. Below is the standard workflow.
-**ASTERIS can be directly applied for the JWST/NIRCam data from F070W to F480M with arbitary exposure time.**
+**ASTERIS can be directly applied to the JWST/NIRCam data from F070W to F480M with arbitary exposure time.**
 ASTERIS_8 requires 8 astrometrically-aligned fits.
 ASTERIS_4 requires 4 astrometrically-aligned fits.
 
