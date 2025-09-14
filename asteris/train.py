@@ -31,9 +31,9 @@ class training_class():
         Returns:
            self
         """
-        self.overlap_factor = 0.5
+        self.overlap_factor = 0.1
         self.datasets_path = ''
-        self.n_epochs = 20
+        self.n_epochs = 10
         self.fmap = 24
         self.pth_dir = './pth/'
         self.batch_size = 1
@@ -192,7 +192,7 @@ class training_class():
             # Set zero values to nan
             tmp1 = noise_im.astype(np.float32)
             tmp1[tmp1 == 0] = np.nan
-            # Median subtraction
+            # Background removal
             zm_noise_img_input = np.nanmean(tmp1,0)
             img_mean = np.nanmedian(zm_noise_img_input)
             noise_im = tmp1  - img_mean
@@ -200,7 +200,7 @@ class training_class():
             noise_im[np.isnan(noise_im)] = 0            
             self.noise_im_all.append(noise_im)
             
-            # Compute temporal overlap
+            # Set temporal overlap
             patch_t2 = self.patch_t * 2
             self.gap_t = math.floor((self.whole_t - patch_t2) * 0.4)
 
@@ -317,7 +317,7 @@ class training_class():
         for epoch in range(start_epoch, self.n_epochs):
                 
             # ---- Randomly shuffle frames inside each 3D stack -------------------
-            # This creates different temporal combinations each epoch.
+            # This creates different temporal combinations each epoch for data augmentation.
             shuffled_noise_im_all = []
             for arr in self.noise_im_all:
                 if arr.shape[0] > 1:  
@@ -355,6 +355,7 @@ class training_class():
                 mean_fake_B = torch.mean(fake_B,2)
                 mean_fake_B = torch.clamp(mean_fake_B, max=mean_real_B.max())
                 
+                # Mask the bad pixels for training
                 if self.mask_train == 0:
                     mask_target = 1  
                     mask_target_mean = 1                       
