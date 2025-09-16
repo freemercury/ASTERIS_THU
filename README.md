@@ -160,7 +160,7 @@ pages = {1--12},
 doi = {10.1234/astro.2025.12345}
 }</pre>
 
-Should you have any questions regarding this code and the corresponding results, please contact Yuduo Guo (gyd@mail.tsinghua.edu.cn).
+Should you have any questions regarding this code or the corresponding results and collaboration inquiries, please contact Yuduo Guo at gyd@mail.tsinghua.edu.cn.
 
 ---
 
