@@ -1,13 +1,4 @@
 # Data files
-*.tif
-*.tiff
-*.fits
-*.fits.gz
-*.png
-*.pdf
-*.jpeg
-*.csv
-*.mat
 pth/
 swanlog/
 test_datasets/
