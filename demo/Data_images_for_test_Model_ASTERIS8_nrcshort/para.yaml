@@ -1,0 +1,14 @@
+GPU: 0,1,2,3
+batch_size: 4
+datasets_path: ./test_datasets/short/cache/images_for_test/
+denoise_model: ASTERIS8_nrcshort
+fmap: 24
+gap_t: 8
+gap_x: 1080
+gap_y: 1080
+output_dir: ./result/short/
+overlap_factor: 0.1
+patch_t: 8
+patch_x: 1200
+patch_y: 1200
+pth_dir: ./pth/

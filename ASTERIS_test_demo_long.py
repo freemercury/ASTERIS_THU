@@ -32,9 +32,9 @@ save_path = "./result/long/"
 # Hdu_num of the FITS file, usually 1 for JWST NIRCam data
 hdu_num = 1
 # ASTERIS model 
-denoise_model = 'ASTERIS4_nrclong' 
+denoise_model = 'ASTERIS8_nrclong' 
 # the version of ASTERIS, 4 or 8
-test_mode = 4
+test_mode = 8
 # Index of GPU you will use for computation (e.g. '0', '0,1', '0,1,2')  ``    
 GPU = '0,1,2,3'
 # Batch size for each GPU, the total batch size = batch_size * len(GPU)
