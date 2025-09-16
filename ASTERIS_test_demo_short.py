@@ -36,11 +36,11 @@ denoise_model = 'ASTERIS8_nrcshort'
 # the version of ASTERIS, 4 or 8
 test_mode = 8
 # Index of GPU you will use for computation (e.g. '0', '0,1', '0,1,2')  ``    
-GPU = '0,1,2,3'
+GPU = '0'
 # Batch size for each GPU, the total batch size = batch_size * len(GPU)
 batch_size = 1
 # Width and height of 3D patches, has to be //8                    
-patch_xy = 1200
+patch_xy = 800
 # the overlap factor between two adjacent patches.                          
 overlap_factor = 0.1              
 # if you use Windows system, set this to 0.0            

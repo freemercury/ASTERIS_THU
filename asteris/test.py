@@ -86,7 +86,7 @@ class testing_class():
            self.datasets_name=self.datasets_path.split("/")[-2]
 
         if not os.path.exists(self.output_dir):
-            os.mkdir(self.output_dir)
+            os.makedirs(self.output_dir, exist_ok=True)
         # ---- Create subfolder for this dataset + model combination -------------
         self.output_path = (
             self.output_dir + '/' + 
@@ -94,7 +94,7 @@ class testing_class():
             '_Model_' + self.denoise_model
         )
         if not os.path.exists(self.output_path):
-            os.mkdir(self.output_path)
+            os.makedirs(self.output_path, exist_ok=True)
 
     def set_params(self, params_dict):
         """
