@@ -39,7 +39,7 @@ continue_train = 0
 # If continue_train = 1, set the path of the last checkpoint
 checkpoint_path = ''
 # Index of GPU used for computation (e.g. '0', '0,1', '0,1,2')
-GPU = '0,1,2,3'              
+GPU = '0'              
 # Recommended number of training epochs: from 10 to 20
 n_epochs = 20                
 # Recommended learning rate: from 1.0e-4 to 1.5e-4
