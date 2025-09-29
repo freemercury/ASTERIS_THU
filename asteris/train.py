@@ -15,6 +15,7 @@ from torch.optim import lr_scheduler
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
 from .data_process import trainset
+from .data_process import filter_samples
 
 class training_class():
     """
@@ -327,10 +328,17 @@ class training_class():
                     shuffled_arr = arr      
                 shuffled_noise_im_all.append(shuffled_arr)
             # ---- Build dataset & dataloader ------------------------------------
-            train_data = trainset(self.name_list, 
+            filtered_names, filtered_stack_index = filter_samples(self.name_list, 
+                                                                  self.coordinate_list, 
+                                                                  shuffled_noise_im_all, 
+                                                                  self.stack_index,
+                                                                  zero_threshold=0.20, 
+                                                                  verbose=True)       
+            
+            train_data = trainset(filtered_names, 
                                   self.coordinate_list, 
                                   shuffled_noise_im_all, 
-                                  self.stack_index)
+                                  filtered_stack_index)
             
             trainloader = DataLoader(train_data, 
                                      batch_size=self.batch_size, 

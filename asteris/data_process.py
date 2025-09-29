@@ -528,3 +528,47 @@ def test_preprocess(args):
         img_means.append(img_mean)
 
     return name_lists, noise_imgs, coordinate_lists, im_names, img_means
+
+def _zero_ratio_of_input(noise_img, coord):
+    """
+    tmp1 = noise_img[init_s:end_s:2, init_h:end_h, init_w:end_w]
+    """
+    init_h, end_h = coord['init_h'], coord['end_h']
+    init_w, end_w = coord['init_w'], coord['end_w']
+    init_s, end_s = coord['init_s'], coord['end_s']
+    tmp1 = noise_img[init_s:end_s:2, init_h:end_h, init_w:end_w]
+    # 以整个 3D 输入块（T/2, H, W）为统计基准
+    return float(np.mean(tmp1 == 0))
+
+
+def filter_samples(name_list, coordinate_list, noise_img_all, stack_index,
+                   zero_threshold=0.2, verbose=True):
+
+    kept_names, kept_stack_idx = [], []
+    dropped, ratios = 0, []
+
+    for i, name in enumerate(name_list):
+        coord = coordinate_list[name]
+        nz_ratio = _zero_ratio_of_input(noise_img_all[stack_index[i]], coord)
+        ratios.append(nz_ratio)
+        if nz_ratio <= zero_threshold:
+            kept_names.append(name)
+            kept_stack_idx.append(stack_index[i])
+        else:
+            dropped += 1
+
+    if verbose:
+        total = len(name_list)
+        kept = len(kept_names)
+        print(f"[Filter] total={total}, kept={kept}, dropped={dropped}, "
+              f"threshold={zero_threshold:.2f}, "
+              f"kept_ratio={kept/total if total else 0:.2%}")
+        if total:
+            import numpy as np
+            arr = np.array(ratios, dtype=float)
+            print(f"[Filter] zero_ratio stats (all before filtering): "
+                  f"min={arr.min():.3f}, "
+                  f"median={np.median(arr):.3f}, "
+                  f"max={arr.max():.3f}")
+
+    return kept_names, kept_stack_idx
