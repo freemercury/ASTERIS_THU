@@ -7,3 +7,4 @@ reduction_datasets/
 result/
 .vscode/
 asteris/__pycache__
+Local_make_train_dataset.py
