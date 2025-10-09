@@ -14,12 +14,12 @@ from .ASTERIS_net_4 import ASTERIS4
 from torch.optim import lr_scheduler
 from torch.autograd import Variable
 from torch.utils.data import DataLoader
-from .data_process import trainset
+from .data_process import trainset 
 
 class training_class():
     """
     Class implementing training process
-    """
+    """ 
     
     def __init__(self, params_dict):
         """
