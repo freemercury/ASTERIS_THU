@@ -94,7 +94,7 @@ python ASTERIS_test.py
 ### Training a Custom Model
 
 1. Place astrometrically-aligned `.fits` files under `./reduction_datasets/<pointing>/`
-   - Each subdirectory needs >= 8 files (for ASTERIS_8) or >= 16 files (for ASTERIS_4)
+   - Each subdirectory needs >= 8 files (for ASTERIS_4) or >= 8 files (for ASTERIS_4)
 
 2. Convert to training stacks:
 ```bash
