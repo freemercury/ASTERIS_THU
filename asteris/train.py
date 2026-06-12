@@ -49,8 +49,8 @@ class training_class():
         self.ngpu = 1
         self.num_workers = 0
         self.checkpoint_path = ''
-        self.set_params(params_dict)
         self.mask_train = 0
+        self.set_params(params_dict)
 
     def check_nan(self, arr):
         return 1 if np.isnan(arr).any() else 0
