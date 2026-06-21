@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from asteris.utils import restore_fits
 from .ASTERIS_net_8 import ASTERIS8
 from .ASTERIS_net_4 import ASTERIS4
-from .data_process import test_preprocess, testset, multibatch_test_save, singlebatch_test_save
+from .data_process import test_preprocess, testset, multibatch_test_save, singlebatch_test_save, feather_window_2d, get_full_patch_coordinate
 from tqdm import tqdm
 
 class testing_class():
@@ -47,7 +47,79 @@ class testing_class():
         self.denoise_model = ''
         self.result_display = ''
         self.scale_factor = 4
+        # Stitching strategy for overlapping patches:
+        #   'hard'    -> crop each patch to its centre and overwrite (sharp seams possible)
+        #   'feather' -> weighted overlap-blend with an edge-tapered window (seamless)
+        self.stitch_mode = 'hard'
+        # Edge floor of the feathering window (only used when stitch_mode == 'feather')
+        self.feather_eps = 1e-3
         self.set_params(params_dict)
+
+    def _feather_stitch(self, outputs, noise_imgs, img_means):
+        """
+        Seamless weighted overlap-blend stitching.
+
+        Each patch is placed at its full extent, weighted by an edge-tapered
+        window (1 at the centre, ~feather_eps at the borders) times its data
+        coverage, and accumulated. Dividing the accumulated values by the
+        accumulated weights makes every output pixel a convex combination
+        (weights sum to 1) of the per-patch network estimates of that pixel,
+        so adjacent-patch seams are smoothed without creating or destroying
+        flux relative to the patch outputs.
+
+        Args:
+            outputs    : list of per-batch network outputs collected during inference
+            noise_imgs : list of full zero-meaned input stacks (coverage reference)
+            img_means  : list of per-image scalar means to restore
+        Returns:
+            denoise_imgs, input_imgs : lists of blended full-resolution stacks
+        """
+        print("Stitching mode -----> feather (weighted overlap-blend)")
+        denoise_acc = [np.zeros_like(n, dtype=np.float32) for n in noise_imgs]
+        input_acc = [np.zeros_like(n, dtype=np.float32) for n in noise_imgs]
+        weight_acc = [np.zeros_like(n, dtype=np.float32) for n in noise_imgs]
+        win_cache = {}
+
+        def _accumulate(N, op_full, rp_full, coords_tuple):
+            N = int(N)
+            init_s, end_s, init_h, end_h, init_w, end_w = coords_tuple
+            op_full = np.asarray(op_full)
+            rp_full = np.asarray(rp_full)
+            if op_full.ndim == 2:               # (h, w) -> (1, h, w)
+                op_full = op_full[None, :, :]
+                rp_full = rp_full[None, :, :]
+            h = end_h - init_h
+            w = end_w - init_w
+            key = (h, w)
+            if key not in win_cache:
+                win_cache[key] = feather_window_2d(h, w, eps=self.feather_eps)
+            win2d = win_cache[key]
+            # coverage: 0 in the globally zero-meaned input means "no data"
+            cov = (noise_imgs[N][init_s:end_s, init_h:end_h, init_w:end_w] != 0).astype(np.float32)
+            wgt = win2d[None, :, :] * cov
+            denoise_acc[N][init_s:end_s, init_h:end_h, init_w:end_w] += (op_full + img_means[N]) * wgt
+            input_acc[N][init_s:end_s, init_h:end_h, init_w:end_w] += (rp_full + img_means[N]) * wgt
+            weight_acc[N][init_s:end_s, init_h:end_h, init_w:end_w] += wgt
+
+        for output in outputs:
+            output_imgs = output['output_imgs']
+            raw_imgs = output['raw_imgs']
+            img_ids = output['img_ids']
+            coordinates = output['coordinates']
+            if output_imgs.ndim != 3:           # multi-sample batch
+                for i, N in enumerate(img_ids):
+                    _accumulate(N, output_imgs[i], raw_imgs[i],
+                                get_full_patch_coordinate(coordinates, i))
+            else:                                # single-sample batch
+                _accumulate(img_ids, output_imgs, raw_imgs,
+                            get_full_patch_coordinate(coordinates, None))
+
+        # Normalise in place: divide accumulated flux by accumulated weight
+        for N in range(len(noise_imgs)):
+            wsum = weight_acc[N]
+            np.divide(denoise_acc[N], wsum, out=denoise_acc[N], where=wsum > 0)
+            np.divide(input_acc[N], wsum, out=input_acc[N], where=wsum > 0)
+        return denoise_acc, input_acc
 
     def run(self):
         """
@@ -296,8 +368,11 @@ class testing_class():
                 # ----------------------- Allocate stitch buffers -------------------
                 denoise_imgs = [np.zeros_like(noise_img) for noise_img in noise_imgs]
                 input_imgs = [np.zeros_like(input_img) for input_img in noise_imgs]
-                # ----------------------- Stitch patches back ----------------------- 
-                for output in outputs:
+                # Seamless weighted overlap-blend; the hard-stitch loop below is skipped.
+                if self.stitch_mode == 'feather':
+                    denoise_imgs, input_imgs = self._feather_stitch(outputs, noise_imgs, img_means)
+                # ----------------------- Stitch patches back -----------------------
+                for output in ([] if self.stitch_mode == 'feather' else outputs):
                     output_imgs = output['output_imgs']
                     raw_imgs = output['raw_imgs']
                     img_ids = output['img_ids']

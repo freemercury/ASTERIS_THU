@@ -84,7 +84,15 @@ python ASTERIS_test_demo_long.py    # long wavelengths (>= 2.5 um)
 | `GPU` | GPU index (e.g., `'0'`, `'0,1'`) | `'0'` |
 | `patch_xy` | Patch size (must be divisible by 8) | `800` |
 | `overlap_factor` | Overlap between patches | `0.1` |
+| `stitch_mode` | Patch stitching: `'feather'` (seamless) or `'hard'` (legacy) | `'feather'` |
 | `hdu_num` | FITS HDU index for science data | `1` |
+
+> **Stitching modes.** Large images are processed patch-by-patch. `'hard'` crops each
+> patch to its centre and writes it in, which can leave visible block seams where adjacent
+> patches meet. `'feather'` blends overlapping patches with an edge-tapered (centre-weighted)
+> window and normalises by the accumulated weights, so every output pixel is a convex
+> combination of the per-patch estimates — seams are removed without creating or destroying
+> flux (photometry-preserving).
 
 3. Run:
 ```bash

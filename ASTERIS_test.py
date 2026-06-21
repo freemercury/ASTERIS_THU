@@ -41,6 +41,10 @@ GPU = '0'
 batch_size = 1
 # Width and height of 3D patches, has to be //8                    
 patch_xy = 800
+# stitching strategy for overlapping patches:
+#   'feather' -> weighted overlap-blend with an edge-tapered window (seamless, flux-preserving)
+#   'hard'    -> legacy: crop to patch centre and overwrite (can leave visible block seams)
+stitch_mode = 'feather'
 # the overlap factor between two adjacent patches.                          
 overlap_factor = 0.1              
 # if you use Windows system, set this to 0.0            
@@ -62,6 +66,7 @@ test_dict = {
     'patch_y': patch_xy,
     'patch_t': test_mode,
     'overlap_factor':overlap_factor,
+    'stitch_mode': stitch_mode,
     'test_datasize': test_mode,
     'datasets_path': datasets_path+'cache/images_for_test/',
     'pth_dir': './pth/',                 

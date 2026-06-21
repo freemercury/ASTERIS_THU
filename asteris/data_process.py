@@ -358,7 +358,61 @@ def multibatch_test_save(single_coordinate, id, output_image, raw_image):
 
     return output_patch, raw_patch, stack_start_w, stack_end_w, stack_start_h, stack_end_h, stack_start_s, stack_end_s
 
-    
+
+# ----------------------------------------------------------------------------
+# Feathered (weighted overlap-blend) stitching helpers
+# ----------------------------------------------------------------------------
+def _feather_taper_1d(n, eps):
+    """
+    1D smooth taper: ~1 at the patch centre, -> eps at the two edges.
+
+    A raised-cosine (Hann) profile floored at ``eps`` so that pixels covered by
+    a single patch still receive a strictly positive (non-zero) weight.
+    """
+    if n <= 1:
+        return np.ones(n, dtype=np.float32)
+    x = np.linspace(-1.0, 1.0, n)
+    w = 0.5 * (1.0 + np.cos(np.pi * x))   # 1 at centre, 0 at edges
+    w = np.clip(w, eps, None)
+    return w.astype(np.float32)
+
+
+def feather_window_2d(h, w, eps=1e-3):
+    """
+    Separable 2D feathering window of shape (h, w): peak 1 at the centre,
+    tapering to ``eps`` at the borders.
+
+    Used as the per-patch blend weight when stitching overlapping patches.
+    Because the accumulated values are divided by the accumulated weights, each
+    output pixel becomes a convex combination (weights sum to 1) of the
+    per-patch network estimates of that same pixel: the seam between adjacent
+    patches is smoothed and no flux is created or destroyed relative to the
+    patch outputs. The centre-weighting also lets the better-context central
+    pixels of each patch dominate over its lower-context edges.
+    """
+    wy = _feather_taper_1d(h, eps)
+    wx = _feather_taper_1d(w, eps)
+    return np.outer(wy, wx).astype(np.float32)
+
+
+def get_full_patch_coordinate(single_coordinate, id=None):
+    """
+    Return the FULL patch placement in the whole stack (no centre-cropping):
+    ``(init_s, end_s, init_h, end_h, init_w, end_w)``.
+
+    Handles both the single-sample dict (plain ints) and the collated
+    DataLoader batch dict (tensors indexed by ``id``).
+    """
+    keys = ['init_s', 'end_s', 'init_h', 'end_h', 'init_w', 'end_w']
+    vals = []
+    for k in keys:
+        v = single_coordinate[k]
+        if id is not None:
+            v = v.numpy()[id] if hasattr(v, 'numpy') else v[id]
+        vals.append(int(v))
+    return tuple(vals)
+
+
 def test_preprocess(args):
     """
     Partition each original noisy stack into overlapping 3D sub-stacks (patches)
