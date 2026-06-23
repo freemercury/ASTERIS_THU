@@ -11,7 +11,7 @@
 
 Validated on the **James Webb Space Telescope (JWST)** and the **Subaru Telescope**.
 
-> Y. Guo, H. Zhang, M. Li, F. Yu, Y. Wu, Y. Hao, S. Huang, Y. Liang, X. Lin, X. Li, J. Wu, Z. Cai, Q. Dai. *Deeper detection limits in astronomical imaging using self-supervised spatiotemporal denoising*. **Science** (2025). [doi:10.1126/science.ady9404](https://www.science.org/doi/10.1126/science.ady9404)
+> Y. Guo, H. Zhang, M. Li, F. Yu, Y. Wu, Y. Hao, S. Huang, Y. Liang, X. Lin, X. Li, J. Wu, Z. Cai, Q. Dai. *Deeper detection limits in astronomical imaging using self-supervised spatiotemporal denoising*. **Science** (2026). [doi:10.1126/science.ady9404](https://www.science.org/doi/10.1126/science.ady9404)
 
 ---
 
