@@ -154,7 +154,7 @@ ASTERIS_THU/
 ## Citation
 
 ```bibtex
-@article{Guo2025ASTERIS,
+@article{Guo2026ASTERIS,
   title   = {Deeper detection limits in astronomical imaging using
              self-supervised spatiotemporal denoising},
   author  = {Guo, Yuduo and Zhang, Hao and Li, Mingyu and Yu, Fujiang
@@ -162,7 +162,7 @@ ASTERIS_THU/
              and Liang, Yongming and Lin, Xiaojing and Li, Xinyang
              and Wu, Jiamin and Cai, Zheng and Dai, Qionghai},
   journal = {Science},
-  year    = {2025},
+  year    = {2026},
   doi     = {10.1126/science.ady9404}
 }
 ```
