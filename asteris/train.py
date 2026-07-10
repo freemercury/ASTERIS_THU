@@ -232,7 +232,8 @@ class training_class():
                         single_coordinate['init_s'] = init_s
                         single_coordinate['end_s'] = end_s
                         # Set a unique name to each patch
-                        patch_name = self.datasets_name + '_' + im_name.replace('.tif', '') + '_x' + str(
+                        filename, _ = os.path.splitext(os.path.basename(im_name))
+                        patch_name = self.datasets_name + '_' + filename + '_x' + str(
                             x) + '_y' + str(y) + '_z' + str(z)
                         self.name_list.append(patch_name)
                         self.coordinate_list[patch_name] = single_coordinate
